@@ -1,5 +1,6 @@
 package br.com.jmsstudio.jumper.graphic;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
@@ -10,6 +11,12 @@ public class ColorHelper {
         Paint paint = new Paint();
         paint.setColor(android.graphics.Color.RED);
 //        paint.setColor(0xFFFF0000);
+        return paint;
+    }
+
+    public static Paint getPipeColor() {
+        Paint paint = new Paint();
+        paint.setColor(Color.GREEN);
         return paint;
     }
 }

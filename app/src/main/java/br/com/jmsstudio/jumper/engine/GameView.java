@@ -11,6 +11,7 @@ import android.view.View;
 
 import br.com.jmsstudio.jumper.R;
 import br.com.jmsstudio.jumper.elements.Bird;
+import br.com.jmsstudio.jumper.elements.Pipe;
 import br.com.jmsstudio.jumper.graphic.Screen;
 
 /**
@@ -19,6 +20,7 @@ import br.com.jmsstudio.jumper.graphic.Screen;
 public class GameView extends SurfaceView implements Runnable, View.OnTouchListener{
     private boolean isRunning = true;
     private Bird bird;
+    private Pipe pipe;
     private Bitmap background;
     private Screen screen;
 
@@ -32,6 +34,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
     private void init() {
         this.bird = new Bird();
+        this.pipe = new Pipe(screen, 800);
         Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         this.background = Bitmap.createScaledBitmap(backgroundImage, backgroundImage.getWidth(), this.screen.getHeight(), false);
     }
@@ -48,6 +51,9 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
                 this.bird.draw(canvas);
                 this.bird.fall();
+
+                this.pipe.draw(canvas);
+                this.pipe.move();
 
                 holder.unlockCanvasAndPost(canvas);
             }
