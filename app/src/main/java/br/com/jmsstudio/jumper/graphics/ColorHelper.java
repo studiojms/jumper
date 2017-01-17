@@ -1,7 +1,8 @@
-package br.com.jmsstudio.jumper.graphic;
+package br.com.jmsstudio.jumper.graphics;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 /**
  * Created by jms on 09/01/17.
@@ -9,7 +10,7 @@ import android.graphics.Paint;
 public class ColorHelper {
     public static Paint getBirdColor() {
         Paint paint = new Paint();
-        paint.setColor(android.graphics.Color.RED);
+        paint.setColor(Color.RED);
 //        paint.setColor(0xFFFF0000);
         return paint;
     }
@@ -17,6 +18,15 @@ public class ColorHelper {
     public static Paint getPipeColor() {
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
+        return paint;
+    }
+
+    public static Paint getScoreColor() {
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(80);
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
+        paint.setShadowLayer(3, 5, 5, Color.BLACK);
         return paint;
     }
 }

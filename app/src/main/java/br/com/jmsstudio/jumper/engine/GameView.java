@@ -11,8 +11,9 @@ import android.view.View;
 
 import br.com.jmsstudio.jumper.R;
 import br.com.jmsstudio.jumper.elements.Bird;
-import br.com.jmsstudio.jumper.elements.Pipe;
-import br.com.jmsstudio.jumper.graphic.Screen;
+import br.com.jmsstudio.jumper.elements.Pipes;
+import br.com.jmsstudio.jumper.elements.Score;
+import br.com.jmsstudio.jumper.graphics.Screen;
 
 /**
  * Created by jms on 09/01/17.
@@ -20,9 +21,10 @@ import br.com.jmsstudio.jumper.graphic.Screen;
 public class GameView extends SurfaceView implements Runnable, View.OnTouchListener{
     private boolean isRunning = true;
     private Bird bird;
-    private Pipe pipe;
     private Bitmap background;
     private Screen screen;
+    private Pipes pipes;
+    private Score score;
 
     public GameView(Context context) {
         super(context);
@@ -33,8 +35,9 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     }
 
     private void init() {
-        this.bird = new Bird();
-        this.pipe = new Pipe(screen, 800);
+        this.bird = new Bird(screen);
+        this.score = new Score();
+        this.pipes = new Pipes(screen, score);
         Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         this.background = Bitmap.createScaledBitmap(backgroundImage, backgroundImage.getWidth(), this.screen.getHeight(), false);
     }
@@ -52,8 +55,10 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
                 this.bird.draw(canvas);
                 this.bird.fall();
 
-                this.pipe.draw(canvas);
-                this.pipe.move();
+                this.pipes.draw(canvas);
+                this.pipes.move();
+
+                this.score.draw(canvas);
 
                 holder.unlockCanvasAndPost(canvas);
             }

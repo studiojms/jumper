@@ -1,4 +1,4 @@
-package br.com.jmsstudio.jumper.graphic;
+package br.com.jmsstudio.jumper.graphics;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
