@@ -18,7 +18,7 @@ public class Bird {
     private Screen screen;
 
     public Bird(Screen screen) {
-        this.height = 100;
+        this.height = screen.getHeight()/2 - RADIUS;
         this.screen = screen;
     }
 
@@ -40,5 +40,26 @@ public class Bird {
         if (this.height < RADIUS) {
             this.height = RADIUS;
         }
+    }
+
+    /**
+     * Returns the Y coordinate of the top of the bird
+     */
+    public int getVerticalTopPosition() {
+        return height - RADIUS;
+    }
+
+    /**
+     * Returns the Y coordinate of the bottom of the bird
+     */
+    public int getVerticalBottomPosition() {
+        return height + RADIUS;
+    }
+
+    /**
+     * Returns the X coordinate of the right side of the bird
+     */
+    public int getRightPosition() {
+        return WIDTH + RADIUS;
     }
 }

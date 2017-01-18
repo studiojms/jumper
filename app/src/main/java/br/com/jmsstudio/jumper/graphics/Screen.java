@@ -22,4 +22,8 @@ public class Screen {
     public int getHeight() {
         return displayMetrics.heightPixels;
     }
+
+    public int getWidth() {
+        return displayMetrics.widthPixels;
+    }
 }

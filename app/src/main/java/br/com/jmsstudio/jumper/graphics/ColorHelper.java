@@ -29,4 +29,28 @@ public class ColorHelper {
         paint.setShadowLayer(3, 5, 5, Color.BLACK);
         return paint;
     }
+
+    public static Paint getGameOverBackground() {
+        Paint paint = new Paint();
+        paint.setColor(0xAA000000);
+        return paint;
+    }
+
+    public static Paint getGameOverColor() {
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(80);
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
+        paint.setShadowLayer(2, 3, 3, Color.GRAY);
+        return paint;
+    }
+
+    public static Paint getGameOverRestartMessageColor() {
+        Paint paint = new Paint();
+        paint.setColor(Color.YELLOW);
+        paint.setTextSize(20);
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
+//        paint.setShadowLayer(2, 3, 3, Color.WHITE);
+        return paint;
+    }
 }

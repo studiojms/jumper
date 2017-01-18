@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -11,6 +13,7 @@ import android.view.View;
 
 import br.com.jmsstudio.jumper.R;
 import br.com.jmsstudio.jumper.elements.Bird;
+import br.com.jmsstudio.jumper.elements.GameOver;
 import br.com.jmsstudio.jumper.elements.Pipes;
 import br.com.jmsstudio.jumper.elements.Score;
 import br.com.jmsstudio.jumper.graphics.Screen;
@@ -25,6 +28,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     private Screen screen;
     private Pipes pipes;
     private Score score;
+    private GameOver gameOver;
 
     public GameView(Context context) {
         super(context);
@@ -60,9 +64,27 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
                 this.score.draw(canvas);
 
+                CollisionDetector collisionDetector = new CollisionDetector(this.bird, this.pipes);
+                if (collisionDetector.didCollide()) {
+                    isRunning = false;
+                    renderGameOver(canvas);
+                }
+
                 holder.unlockCanvasAndPost(canvas);
             }
         }
+    }
+
+    /**
+     * Renders the game over message
+     *
+     * @param canvas
+     */
+    private void renderGameOver(Canvas canvas) {
+        if (this.gameOver == null) {
+            this.gameOver = new GameOver(this.screen);
+        }
+        this.gameOver.draw(canvas);
     }
 
     public void start() {
@@ -75,7 +97,27 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        this.bird.jump();
+        if (isRunning) {
+            this.bird.jump();
+        } else {
+            restart();
+        }
         return false;
+    }
+
+    private void restart() {
+        Canvas canvas = getHolder().lockCanvas();
+
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+
+        canvas.drawRect(0, 0, this.screen.getWidth(), this.screen.getHeight(), paint);
+        getHolder().unlockCanvasAndPost(canvas);
+        init();
+        start();
+    }
+
+    public boolean isEnded() {
+        return this.gameOver != null;
     }
 }

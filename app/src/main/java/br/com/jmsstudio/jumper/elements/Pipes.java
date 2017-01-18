@@ -3,6 +3,7 @@ package br.com.jmsstudio.jumper.elements;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -68,5 +69,17 @@ public class Pipes {
         }
 
         return lastPosition;
+    }
+
+    public boolean collidedWithBird(Bird bird) {
+        boolean collided = false;
+        Iterator<Pipe> pipeIterator = pipes.iterator();
+
+        while (pipeIterator.hasNext() && !collided) {
+            Pipe pipe = pipeIterator.next();
+            collided = pipe.collidedWithBird(bird);
+        }
+
+        return collided;
     }
 }

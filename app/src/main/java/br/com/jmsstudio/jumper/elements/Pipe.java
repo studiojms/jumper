@@ -52,4 +52,12 @@ public class Pipe {
     public int getPosition() {
         return position;
     }
+
+    public boolean collidedWithBird(Bird bird) {
+
+        boolean yAxisCollided = bird.getVerticalTopPosition() < this.upperPipeHeight || bird.getVerticalBottomPosition() > this.bottomPipeHeight;
+        boolean xAxisCollided = bird.getRightPosition() > this.position && this.position > 0;
+
+        return xAxisCollided && yAxisCollided;
+    }
 }
