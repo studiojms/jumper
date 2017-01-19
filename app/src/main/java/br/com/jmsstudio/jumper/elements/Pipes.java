@@ -1,5 +1,6 @@
 package br.com.jmsstudio.jumper.elements;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
@@ -19,14 +20,16 @@ public class Pipes {
     private List<Pipe> pipes = new ArrayList<>();
     private Screen screen;
     private Score score;
+    private Context context;
 
-    public Pipes(Screen screen, Score score) {
+    public Pipes(Screen screen, Score score, Context context) {
         this.screen = screen;
         this.score = score;
+        this.context = context;
         int pos = 500;
 
         for (int i = 0; i < PIPES_SIZE; i++) {
-            Pipe pipe = new Pipe(screen, pos);
+            Pipe pipe = new Pipe(screen, pos, context);
             pipes.add(pipe);
             pos += DISTANCE_BETWEEN_PIPES;
         }
@@ -50,7 +53,7 @@ public class Pipes {
                 //removes the current item from the iterator
                 iterator.remove();
 
-                Pipe newPipe = new Pipe(this.screen, getLastPipePosition() + DISTANCE_BETWEEN_PIPES);
+                Pipe newPipe = new Pipe(this.screen, getLastPipePosition() + DISTANCE_BETWEEN_PIPES, this.context);
 
                 //adds the new pipe to the iterator
                 iterator.add(newPipe);

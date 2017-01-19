@@ -17,6 +17,7 @@ import br.com.jmsstudio.jumper.elements.GameOver;
 import br.com.jmsstudio.jumper.elements.Pipes;
 import br.com.jmsstudio.jumper.elements.Score;
 import br.com.jmsstudio.jumper.graphics.Screen;
+import br.com.jmsstudio.jumper.sound.Sound;
 
 /**
  * Created by jms on 09/01/17.
@@ -26,22 +27,26 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
     private Bird bird;
     private Bitmap background;
     private Screen screen;
+    private Context context;
     private Pipes pipes;
     private Score score;
     private GameOver gameOver;
+    private Sound sound;
 
     public GameView(Context context) {
         super(context);
 
         this.screen = new Screen(context);
+        this.context = context;
         setOnTouchListener(this);
         init();
     }
 
     private void init() {
-        this.bird = new Bird(screen);
-        this.score = new Score();
-        this.pipes = new Pipes(screen, score);
+        this.sound = new Sound(context);
+        this.bird = new Bird(screen, context, sound);
+        this.score = new Score(sound);
+        this.pipes = new Pipes(screen, score, context);
         Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), R.drawable.background);
         this.background = Bitmap.createScaledBitmap(backgroundImage, backgroundImage.getWidth(), this.screen.getHeight(), false);
     }
@@ -66,6 +71,7 @@ public class GameView extends SurfaceView implements Runnable, View.OnTouchListe
 
                 CollisionDetector collisionDetector = new CollisionDetector(this.bird, this.pipes);
                 if (collisionDetector.didCollide()) {
+                    this.sound.playCollision();
                     isRunning = false;
                     renderGameOver(canvas);
                 }
